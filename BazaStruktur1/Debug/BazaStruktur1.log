@@ -1,0 +1,3 @@
+﻿  BazaStruktur1.cpp
+C:\Users\sarta\source\repos\BazaStruktur1\BazaStruktur1\BazaStruktur1.cpp(9,2): warning C4091: "typedef ": zignorowano na lewo od "animal" podczas gdy brak deklaracji zmiennej
+  BazaStruktur1.vcxproj -> C:\Users\sarta\source\repos\BazaStruktur1\Debug\BazaStruktur1.exe
