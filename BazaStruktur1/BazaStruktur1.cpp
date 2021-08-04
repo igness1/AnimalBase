@@ -7,12 +7,14 @@ typedef struct animal
 	string species;
 	int age;
 };
-void add_animal(animal array[], int& last_place_in_array, int base);
-void delete_animal(animal array[], int& last_place_in_array);
-void find(animal array[], int last_place_in_array);
+void add_animal(animal animal_array[], int& last_place_in_array, int base);
+void delete_animal(animal animal_array[], int& last_place_in_array);
+void find(animal animal_array[], int last_place_in_array);
 void notInBase();
-void modify(animal array[], int last_place_in_array);
-void show(animal array[], int last_place_in_array);
+void modify(animal animal_array[], int last_place_in_array);
+void show(animal animal_array[], int last_place_in_array);
+void ageIsANumber();
+
 
 int main()
 {
@@ -23,7 +25,7 @@ int main()
 	cout << "How big base do you want? : ";
 	cin >> base;
 
-	animal* array = new animal[base];
+	animal* animal_array = new animal[base];
 
 	int value = 6;
 
@@ -42,33 +44,35 @@ int main()
 
 		if (value == 1)
 		{
-			add_animal(array, last_place_in_array, base);
+			add_animal(animal_array, last_place_in_array, base);
+			
 		}
 		else if (value == 2)
 		{
-			delete_animal(array, last_place_in_array);
+			delete_animal(animal_array, last_place_in_array);
 		}
 		else if (value == 3)
 		{
-			find(array, last_place_in_array);
+			find(animal_array, last_place_in_array);
 		}
 		else if (value == 4)
 		{
-			modify(array, last_place_in_array);
+			modify(animal_array, last_place_in_array);
 		}
 		else if (value == 5)
 		{
-			show(array, last_place_in_array);
+			show(animal_array, last_place_in_array);
 		}
 	} 	while (value != 6);
 	system("pause");
 	return 0;
 }
-void add_animal(animal array[], int& last_place_in_array, int base)
+void add_animal(animal animal_array[], int& last_place_in_array, int base)
 {
 	int n;
 	cout << "How many animals you want to register?: ";
 	cin >> n;
+
 
 	for (int i = last_place_in_array; i < last_place_in_array + n; i++)
 	{
@@ -76,11 +80,20 @@ void add_animal(animal array[], int& last_place_in_array, int base)
 		{
 			cout << "Animal: " << endl;
 			cout << "Enter the species: ";
-			cin >> array[i].species;
+			cin >> animal_array[i].species;
 			cout << "Enter the name: ";
-			cin >> array[i].name;
-			cout << "Enter the age: ";
-			cin >> array[i].age;
+			cin >> animal_array[i].name;
+			cout << "Enter the age : ";
+			cin >> animal_array[i].age;
+			while (std::cin.fail()) {
+				std::cout << "Error" << std::endl;
+				std::cin.clear();
+				std::cin.ignore(256, '\n');
+				cout << "Enter the age : ";
+				std::cin >> animal_array[i].age;
+			}
+			
+			
 		}
 		else
 		{
@@ -91,7 +104,7 @@ void add_animal(animal array[], int& last_place_in_array, int base)
 	last_place_in_array += n;
 }
 
-void delete_animal(animal array[], int& last_place_in_array)
+void delete_animal(animal animal_array[], int& last_place_in_array)
 {
 	cout << "Data of the animal, that you want to remove:" << endl;;
 	int age;
@@ -104,14 +117,14 @@ void delete_animal(animal array[], int& last_place_in_array)
 	cin >> age;
 	for (int i = 0; i < last_place_in_array; i++)
 	{
-		if (array[i].species == species && array[i].name == name && array[i].age == age)
+		if (animal_array[i].species == species && animal_array[i].name == name && animal_array[i].age == age)
 		{
 
 			for (int j = i + 1; j < last_place_in_array - 1; i++)
 			{
-				array[j].species = array[i].species;
-				array[j].name = array[i].name;
-				array[j].age = array[i].age;
+				animal_array[j].species = animal_array[i].species;
+				animal_array[j].name = animal_array[i].name;
+				animal_array[j].age = animal_array[i].age;
 			}
 
 			cout << "An animal was removed from base." << endl;
@@ -122,7 +135,7 @@ void delete_animal(animal array[], int& last_place_in_array)
 	last_place_in_array -= 1;
 
 }
-void find(animal array[], int last_place_in_array)
+void find(animal animal_array[], int last_place_in_array)
 {
 	cout << "Data of the animal, that you want to find:" << endl;;
 	int age;
@@ -135,11 +148,11 @@ void find(animal array[], int last_place_in_array)
 	cin >> age;
 	for (int i = 0; i < last_place_in_array; i++)
 	{
-		if (array[i].species == species && array[i].name == name && array[i].age == age)
+		if (animal_array[i].species == species && animal_array[i].name == name && animal_array[i].age == age)
 		{
 
 			cout << "Your animal is at " << i << "place in base. "
-				<< "Animal : " << array[i].species << " , " << array[i].name << endl;
+				<< "Animal : " << animal_array[i].species << " , " << animal_array[i].name << endl;
 
 
 		}
@@ -149,7 +162,7 @@ void find(animal array[], int last_place_in_array)
 		}
 	}
 }
-void modify(animal array[], int last_place_in_array)
+void modify(animal animal_array[], int last_place_in_array)
 {
 	cout << "Data of the animal, that you want to modify:" << endl;;
 	int age, value;
@@ -167,23 +180,23 @@ void modify(animal array[], int last_place_in_array)
 	cin >> value;
 	for (int i = 0; i < last_place_in_array; i++)
 	{
-		if (array[i].species == species && array[i].name == name && array[i].age == age)
+		if (animal_array[i].species == species && animal_array[i].name == name && animal_array[i].age == age)
 		{
 
 			if (value == 1)
 			{
 				cout << "Enter the new species for an animal : " << endl;
-				cin >> array[i].species;
+				cin >> animal_array[i].species;
 			}
 			else if (value == 2)
 			{
 				cout << "Enter the new name for an animal : " << endl;
-				cin >> array[i].name;
+				cin >> animal_array[i].name;
 			}
 			else if (value == 3)
 			{
 				cout << "Enter the new age for animal :" << endl;
-				cin >> array[i].age;
+				cin >> animal_array[i].age;
 			}
 
 		}
@@ -193,14 +206,21 @@ void modify(animal array[], int last_place_in_array)
 		}
 	}
 }
-void show(animal array[], int last_place_in_array)
+void show(animal animal_array[], int last_place_in_array)
 {
 	if (last_place_in_array != 0) {
 		for (int i = 0; i < last_place_in_array; i++)
 		{
+			cout << endl;
+			cout << endl;
+			cout << endl;
+			cout << endl;
 			cout << i << " place: ";
-			cout << " SPECIES: " << array[i].species << " NAME: " << array[i].name << " AGE: " << array[i].age << endl;
-
+			cout << " SPECIES: " << animal_array[i].species << " NAME: " << animal_array[i].name << " AGE: " << animal_array[i].age << endl;
+			cout << endl;
+			cout << endl;
+			cout << endl;
+			cout << endl;
 		}
 	}
 	else
@@ -213,4 +233,8 @@ void notInBase()
 
 	cout << "THERE IS NO SUCH ANIMAL." << endl;
 
+}
+void ageIsANumber()
+{
+	cout << "You have entered not a number for age, try again." << endl;
 }
